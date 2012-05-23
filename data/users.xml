@@ -1,0 +1,20 @@
+<?xml version='1.0' standalone='yes'?>
+<users>
+	<user>
+		<nom>
+			Metois
+		</nom>
+		<prenom>
+			Thomas
+		</prenom>
+		<login>
+			Ti-Tom
+		</login>
+		<pwd>
+			ef6e65efc188e7dffd7335b646a85a21
+		</pwd>
+		<email>
+			thomas@laella.net
+		</email>
+	</user>
+</users>
