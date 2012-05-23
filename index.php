@@ -1,13 +1,14 @@
 <?php
 if (isset($_COOKIE["auth"]) && $_COOKIE["auth"]){
-    if ($_GET['logout'] && $_GET['logout']){
+    if (isset($_GET['logout']) && $_GET['logout']){
         session_destroy();
         setcookie('auth',0,1);
         setcookie('login','',1);
         header('Location: index.php');
     }
     // page de chargement des données courantes
-    echo 'F&eacute;licitation, '.$_COOKIE["login"].' est connect&eacute; !';
+    echo 'Bonjour, '.$_COOKIE["login"].'.';
+    include "common/controller.php";
 }else{
     if (isset($_POST['login']) && isset($_POST['pwd'])){
         if (file_exists('data/users.xml')){
