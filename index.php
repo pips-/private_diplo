@@ -2,10 +2,12 @@
 
 session_start();
 
+require_once 'includes/helpers.php';
+
 if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
     if (isset($_GET['logout']) && $_GET['logout']){
         session_destroy();
-        header('Location: index.php');
+        redirect('index.php');
     }
     // page de chargement des données courantes
     echo 'Bonjour, '.$_SESSION["login"].'.';
@@ -18,7 +20,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
                 if (md5($_POST['pwd']) == trim($user->pwd) && $_POST['login'] == trim($user->login)){
                     $_SESSION['auth'] 	= 1;
                     $_SESSION['login'] 	= trim($user->login);
-                    header('Location: index.php');
+                    redirect('index.php');
                 }
             }
         }else{
