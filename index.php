@@ -16,8 +16,9 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
     if (isset($_POST['login']) && isset($_POST['pwd'])){
         if (file_exists('data/users.xml')){
             $users = simplexml_load_file('data/users.xml');
+            $salt = getSalt();
             foreach($users as $user){
-                if (md5($_POST['pwd']) == trim($user->pwd) && $_POST['login'] == trim($user->login)){
+                if (md5($_POST['pwd'].$salt) == trim($user->pwd) && $_POST['login'] == trim($user->login)){
                     $_SESSION['auth'] 	= 1;
                     $_SESSION['login'] 	= trim($user->login);
                     redirect('index.php');
