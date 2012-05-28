@@ -1,13 +1,14 @@
 <?php
-if (isset($_COOKIE["auth"]) && $_COOKIE["auth"]){
+
+session_start();
+
+if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
     if (isset($_GET['logout']) && $_GET['logout']){
         session_destroy();
-        setcookie('auth',0,1);
-        setcookie('login','',1);
         header('Location: index.php');
     }
     // page de chargement des données courantes
-    echo 'Bonjour, '.$_COOKIE["login"].'.';
+    echo 'Bonjour, '.$_SESSION["login"].'.';
     include "common/controller.php";
 }else{
     if (isset($_POST['login']) && isset($_POST['pwd'])){
@@ -15,8 +16,8 @@ if (isset($_COOKIE["auth"]) && $_COOKIE["auth"]){
             $users = simplexml_load_file('data/users.xml');
             foreach($users as $user){
                 if (md5($_POST['pwd']) == trim($user->pwd) && $_POST['login'] == trim($user->login)){
-                    setcookie('auth',1);
-                    setcookie('login',trim($user->login));
+                    $_SESSION['auth'] 	= 1;
+                    $_SESSION['login'] 	= trim($user->login);
                     header('Location: index.php');
                 }
             }
