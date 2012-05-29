@@ -13,7 +13,7 @@ function randomSalt() {
 
 function getSalt($saltfile = 'data/salt.php') {
     if (!is_file($saltfile))
-        file_put_contents($saltfile,'<?php /* |'.$this->randomSalt().'| */ ?>');
+        file_put_contents($saltfile,'<?php /* |'.randomSalt().'| */ ?>');
     $items=explode('|',file_get_contents($saltfile));
     return $items[1];
 }

@@ -1,3 +1,3 @@
-<?xml version='1.0' standalone='yes'?>
-                <games>
-                </games>
+<?xml version="1.0" standalone="yes"?>
+<games>
+                <game id="1"><name>test 1</name><max_players>7</max_players><nb_players>1</nb_players><players><player><login>Ti-Tom</login><puissance/></player></players><date_create>1338326818</date_create></game><game id="1"><name>Test 2</name><max_players>4</max_players><nb_players>1</nb_players><players><player><login>Ti-Tom</login><puissance/></player></players><date_create>1338328550</date_create></game><game id="1"><name>Test 2</name><max_players>4</max_players><nb_players>1</nb_players><players><player><login>Ti-Tom</login><puissance></puissance></player></players><date_create>1338328686</date_create></game></games>

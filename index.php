@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once 'includes/helpers.php';
+require_once 'includes/global.php';
 
 if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
     if (isset($_GET['logout']) && $_GET['logout']){
@@ -15,7 +15,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
 }else{
     if (isset($_POST['login']) && isset($_POST['pwd'])){
         if (file_exists('data/users.xml')){
-            $users = simplexml_load_file('data/users.xml');
+            $users = simplexml_load_file(_USER_FILE);
             $salt = getSalt();
             foreach($users as $user){
                 if (md5($_POST['pwd'].$salt) == trim($user->pwd) && $_POST['login'] == trim($user->login)){
