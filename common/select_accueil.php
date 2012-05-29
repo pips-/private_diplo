@@ -11,7 +11,7 @@ if (isset($_POST['name_game']) && trim($_POST['name_game']) != ''){
     $diplo_game = new diplo_game();
     $diplo_game->setName(trim($_POST['name_game']));
     $diplo_game->setMaxPlayers($_POST['nb_players']);
-    $diplo_game->addPlayer($_COOKIE["login"],""); //$_POST['puissance']
+    $diplo_game->addPlayer($_SESSION["login"],""); //$_POST['puissance']
     $games[] = $diplo_game;
     print_r($diplo_game);
 }

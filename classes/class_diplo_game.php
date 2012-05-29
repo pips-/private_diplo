@@ -11,7 +11,7 @@ class diplo_game{
 
     public function save(){
         if($this->date_create == 0){
-            $this->date_create = date('YmdHis');
+            $this->date_create = time();
         }
     }
 
