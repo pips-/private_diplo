@@ -2,6 +2,23 @@
 <users>
 	<user>
 		<nom>
+			Git
+		</nom>
+		<prenom>
+			Fou
+		</prenom>
+		<login>
+			Gitus
+		</login>
+		<pwd>
+			cc414bfc9c00475b59c87595299ff31d
+		</pwd>
+		<email>
+			git@shroomrider.com
+		</email>
+	</user>
+	<user>
+		<nom>
 			Metois
 		</nom>
 		<prenom>
