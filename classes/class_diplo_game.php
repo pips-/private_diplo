@@ -19,6 +19,7 @@ class diplo_game{
             $this->nb_players = $game[0]->nb_players;
             $this->players = $game[0]->players;
             $this->date_create = $game[0]->date_create;
+            $this->id = $id;
         }
     }
 
@@ -26,14 +27,23 @@ class diplo_game{
         if($this->date_create == 0){
             $this->date_create = time();
         }
-        $games = simplexml_load_file(_GAMES_FILE);
+        
         if( $this->id > 0){
             // TODO : faire l'édition
+            $games = new SimpleXMLElement(_GAMES_FILE,null,true);
+            $game = $games->xpath('game[@id='.$this->id.']');
+            $game[0]->name[0] = $this->name;
+            $game[0]->max_players[0] = $this->max_players;
+            $game[0]->nb_players[0] = $this->nb_players;
+            //$game[0]->players[0] = $this->players;
+            $game[0]->date_create[0] = $this->date_create;
+	        echo $games->asXML(_GAMES_FILE);
         }else{
+            $games = simplexml_load_file(_GAMES_FILE);
             if(count($games) == 0)
                 $this->id = 1;
             else{
-                $attr = $games[count($games)-1]->attributes();
+                $attr = $games->game[count($games)-1]->attributes();
                 $this->id = $attr['id']+1;
             }
             $game = $games->addChild('game');
@@ -75,6 +85,13 @@ class diplo_game{
     }
     public function getName(){
         return $this->name;
+    }
+
+    public function getPlayers(){
+        return $this->players;
+    }
+    public function getId(){
+        return $this->id;
     }
 }
 ?>
