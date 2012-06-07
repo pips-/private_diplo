@@ -33,7 +33,7 @@ switch($op){
                 }
             }
             if($addIt)
-                $diplo_game->addPlayer($_SESSION["login"],""); //$_POST['puissance']
+                $diplo_game->addPlayer($_SESSION["login"],$_POST['puissance']);
             else
                 $diplo_game->save();
         }

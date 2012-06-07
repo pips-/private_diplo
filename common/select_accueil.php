@@ -15,7 +15,14 @@ $games = simplexml_load_file(_GAMES_FILE);
     <input type="text" name="nb_players" value="7" />
     <label>Choix de la puissance</label>
     <select name="puissance">
-        <option></option>
+<?
+if (file_exists(_PUISSANCE_FILE)){
+	$puissances = simplexml_load_file(_PUISSANCE_FILE);
+	foreach($puissances as $puissance){
+		echo "<option>".trim($puissance->name)."</option>";
+	}
+}
+?>
     </select>
     <input type="submit" value="Cr&eacute;er" />
 </form>
