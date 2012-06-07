@@ -17,3 +17,7 @@ function getSalt($saltfile = 'data/salt.php') {
     $items=explode('|',file_get_contents($saltfile));
     return $items[1];
 }
+
+function hashPasswd($password) {
+    return md5($password.getSalt());
+}

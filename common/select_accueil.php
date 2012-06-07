@@ -6,15 +6,9 @@ if (!file_exists(_GAMES_FILE)){
     file_put_contents(_GAMES_FILE,$content);
 }
 $games = simplexml_load_file(_GAMES_FILE);
-if (isset($_POST['name_game']) && trim($_POST['name_game']) != ''){
-    $diplo_game = new diplo_game();
-    $diplo_game->setName(trim($_POST['name_game']));
-    $diplo_game->setMaxPlayers($_POST['nb_players']);
-    $diplo_game->addPlayer($_SESSION["login"],""); //$_POST['puissance']
-}
 ?>
 <h3>Cr&eacute;er une nouvelle partie</h3>
-<form method="POST" action="index.php">
+<form method="POST" action="index.php?op=save_game">
     <label>Nom de la partie</label>
     <input type="text" name="name_game" />
     <label>Nombre de joueurs (7 max)</label>
@@ -34,11 +28,15 @@ if (isset($_POST['name_game']) && trim($_POST['name_game']) != ''){
         <th>
             Nb joueurs
         </th>
+        <th>
+            Actions
+        </th>
     </tr>
     <?
     $lstDispo = '';
     foreach($games as $game){
         if(count($game->xpath('players/player[login="'.$_SESSION["login"].'"]')) > 0){
+            $attr = $game->attributes()
             ?>
             <tr>
                 <td>
@@ -47,15 +45,29 @@ if (isset($_POST['name_game']) && trim($_POST['name_game']) != ''){
                 <td style="text-align:center;">
                     <? echo $game->nb_players."/".$game->max_players; ?>
                 </td>
+                <td>
+                    <?
+                    if($game->players[0]->player->login[0] == $_SESSION["login"]){
+                    ?>
+                    <a href="index.php?op=edit_game&id=<? echo $attr['id']; ?>">
+                        &Eacute;diter
+                    </a>
+                    <?
+                    }
+                    ?>
+                </td>
             </tr>
             <?
-        }elseif($game->nb_players < $game->max_players){
+        }elseif(intval($game->nb_players) < intval($game->max_players)){
             $lstDispo .= '<tr>
                             <td>
                                 '.$game->name.'
                             </td>
                             <td style="text-align:center;">
                                 '.$game->nb_players."/".$game->max_players.'
+                            </td>
+                            <td>
+                                
                             </td>
                         </tr>';
         }
@@ -70,6 +82,9 @@ if (isset($_POST['name_game']) && trim($_POST['name_game']) != ''){
         </th>
         <th>
             Nb joueurs
+        </th>
+        <th>
+            Actions
         </th>
     </tr>
     <?
