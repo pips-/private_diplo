@@ -23,8 +23,9 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
                     redirect('index.php');
                 }
             }
+			echo 'Erreur login/password';
         }else{
-            echo 'Pas d\'utilisateur disponible';
+            echo 'Aucuns utilisateurs';
         }
     }
     ?>
