@@ -17,7 +17,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
         if (file_exists(_USER_FILE)){
             $users = simplexml_load_file(_USER_FILE);
             foreach($users as $user){
-                if (hashPasswd($_POST['pwd']) == trim($user->pwd) && $_POST['login'] == trim($user->login)){
+                if ($_POST['login'] == trim($user->login) && hashPasswd($_POST['pwd']) == trim($user->pwd)){
                     $_SESSION['auth'] 	= 1;
                     $_SESSION['login'] 	= trim($user->login);
                     redirect('index.php');
