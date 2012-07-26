@@ -14,7 +14,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
     include "common/controller.php";
 }else{
     if (isset($_POST['login']) && isset($_POST['pwd'])){
-        if (file_exists('data/users.xml')){
+        if (file_exists(_USER_FILE)){
             $users = simplexml_load_file(_USER_FILE);
             foreach($users as $user){
                 if (hashPasswd($_POST['pwd']) == trim($user->pwd) && $_POST['login'] == trim($user->login)){
