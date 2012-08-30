@@ -1,12 +1,3 @@
-<?php
-if (!file_exists(_GAMES_FILE)){
-    $content = "<?xml version='1.0' standalone='yes'?>
-                <games>
-                </games>";
-    file_put_contents(_GAMES_FILE,$content);
-}
-$games = simplexml_load_file(_GAMES_FILE);
-?>
 <h3>Cr&eacute;er une nouvelle partie</h3>
 <form method="POST" action="index.php?op=save_game">
     <label>Nom de la partie</label>
@@ -16,11 +7,12 @@ $games = simplexml_load_file(_GAMES_FILE);
     <label>Choix de la puissance</label>
     <select name="puissance">
 <?
-if (file_exists(_PUISSANCE_FILE)){
-	$puissances = simplexml_load_file(_PUISSANCE_FILE);
-	foreach($puissances as $puissance){
-		echo "<option>".trim($puissance->name)."</option>";
-	}
+foreach(diplo_puissance::getAll() as $puissance){
+    ?>
+    <option value="<? echo $puissance->fields['id']; ?>">
+        <? echo $puissance->fields['name']; ?>
+    </option>
+    <?
 }
 ?>
     </select>
@@ -40,44 +32,28 @@ if (file_exists(_PUISSANCE_FILE)){
         </th>
     </tr>
     <?
-    $lstDispo = '';
-    foreach($games as $game){
-        if(count($game->xpath('players/player[login="'.$_SESSION["login"].'"]')) > 0){
-            $attr = $game->attributes()
-            ?>
-            <tr>
-                <td>
-                    <? echo $game->name; ?>
-                </td>
-                <td style="text-align:center;">
-                    <? echo $game->nb_players."/".$game->max_players; ?>
-                </td>
-                <td>
-                    <?
-                    if($game->players[0]->player->login[0] == $_SESSION["login"]){
-                    ?>
-                    <a href="index.php?op=edit_game&id=<? echo $attr['id']; ?>">
-                        &Eacute;diter
-                    </a>
-                    <?
-                    }
-                    ?>
-                </td>
-            </tr>
-            <?
-        }elseif(intval($game->nb_players) < intval($game->max_players)){
-            $lstDispo .= '<tr>
-                            <td>
-                                '.$game->name.'
-                            </td>
-                            <td style="text-align:center;">
-                                '.$game->nb_players."/".$game->max_players.'
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>';
-        }
+    foreach(diplo_game::getLstSigned($_SESSION['user']['id']) as $game){
+        ?>
+        <tr>
+            <td>
+                <? echo $game->fields['name']; ?>
+            </td>
+            <td style="text-align:center;">
+                <? echo "/".$game->fields['max_players']; ?>
+            </td>
+            <td>
+                <?
+                if($game->fields['id_user'] == $_SESSION['user']['id']){
+                ?>
+                <a href="index.php?op=edit_game&id=<? echo $game->fields['id']; ?>">
+                    &Eacute;diter
+                </a>
+                <?
+                }
+                ?>
+            </td>
+        </tr>
+        <?
     }
     ?>
 </table>
@@ -95,6 +71,28 @@ if (file_exists(_PUISSANCE_FILE)){
         </th>
     </tr>
     <?
-    echo $lstDispo;
+    foreach(diplo_game::getLstDipo($_SESSION['user']['id']) as $game){
+        ?>
+        <tr>
+            <td>
+                <? echo $game->fields['name']; ?>
+            </td>
+            <td style="text-align:center;">
+                <? echo "/".$game->fields['max_players']; ?>
+            </td>
+            <td>
+                <?
+                /*if($game->fields['id_user'] == $_SESSION['user']['id']){
+                ?>
+                <a href="index.php?op=edit_game&id=<? echo $game->fields['id']; ?>">
+                    &Eacute;diter
+                </a>
+                <?
+                }*/
+                ?>
+            </td>
+        </tr>
+        <?
+    }
     ?>
 </table>

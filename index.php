@@ -1,9 +1,8 @@
 <?php
-
 session_start();
 
 require_once 'includes/global.php';
-
+global $db;
 if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
     if (isset($_GET['logout']) && $_GET['logout']){
         session_destroy();
@@ -14,19 +13,18 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
     include "common/controller.php";
 }else{
     if (isset($_POST['login']) && isset($_POST['pwd'])){
-        if (file_exists(_USER_FILE)){
-            $users = simplexml_load_file(_USER_FILE);
-            foreach($users as $user){
-                if ($_POST['login'] == trim($user->login) && hashPasswd($_POST['pwd']) == trim($user->pwd)){
-                    $_SESSION['auth'] 	= 1;
-                    $_SESSION['login'] 	= trim($user->login);
-                    redirect('index.php');
-                }
-            }
+		$sel = "SELECT	*
+				FROM	".diplo_player::TABLE_NAME."
+				WHERE	login LIKE '".$_POST['login']."'
+				AND		password = '".hashPasswd($_POST['pwd'])."'";
+		$res = $db->query($sel);
+		if ($r = $res->fetchArray()){
+			$_SESSION['auth'] 	= 1;
+			$_SESSION['login'] 	= $r['login'];
+			$_SESSION['user'] 	= $r;
+			redirect('index.php');
+		}else
 			echo 'Erreur login/password';
-        }else{
-            echo 'Aucuns utilisateurs';
-        }
     }
     ?>
     <form method="POST" action="index.php">

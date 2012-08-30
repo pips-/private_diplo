@@ -1,11 +1,10 @@
 <?php
-class diplo_player{
-    private $login = 7;
-    private $nom 	= '';
-    private $prenom 	= '';
-    private $passwd 	= '';
-    private $email 	= '';
-    private $puissance 	= null;
+class diplo_player extends diplo{
+	const TABLE_NAME = 'diplo_player';
+
+	function __construct() {
+		parent::diplo(self::TABLE_NAME,'id');
+	}
 
     public function setLogin($login){
         $this->login = $login;

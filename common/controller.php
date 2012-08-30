@@ -10,7 +10,7 @@ switch($op){
             $game = new diplo_game();
             $game->open($id);
             $players = $game->getPlayers();
-            if($players[0]->player->login[0] == $_SESSION["login"])
+            if($game->fields['id_user'] == $_SESSION['user']['id'])
                 include "common/edit_game.php";
             else
                 redirect('index.php');
@@ -23,19 +23,12 @@ switch($op){
             if(isset($_POST['id']) && $_POST['id'] != '' && $_POST['id'] > 0){
                 $diplo_game->open($_POST['id']);
             }
-            $diplo_game->setName(trim($_POST['name_game']));
-            $diplo_game->setMaxPlayers($_POST['nb_players']);
-            $addIt = true;
-            foreach($diplo_game->getPlayers() as $player){
-                if($player->player->login[0] == $_SESSION["login"]){
-                    $addIt = false;
-                    break;
-                }
-            }
-            if($addIt)
-                $diplo_game->addPlayer($_SESSION["login"],$_POST['puissance']);
-            else
-                $diplo_game->save();
+            $diplo_game->fields['name'] = trim($_POST['name_game']);
+            $diplo_game->fields['max_players'] = $_POST['nb_players'];
+            $diplo_game->fields['id_user'] = $_SESSION['user']['id'];
+            $diplo_game->save();
+
+            $diplo_game->addPlayer($_SESSION['user']['id'],$_POST['puissance']);
         }
         redirect('index.php');
         break;
