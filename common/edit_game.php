@@ -8,13 +8,13 @@
         <input type="text" name="nb_players" value="<?php echo $game->fields['max_players']; ?>" />
         <label>Choix de la puissance</label>
         <select name="puissance">
-		<?
+		<?php
 		foreach(diplo_puissance::getAll() as $puissance){
 		    ?>
-		    <option value="<? echo $puissance->fields['id']; ?>">
-			<? echo $puissance->fields['name']; ?>
+		    <option value="<?php echo $puissance->fields['id']; ?>">
+			<?php echo $puissance->fields['name']; ?>
 		    </option>
-		    <?
+		    <?php
 		}
 		?>
         </select>
