@@ -8,7 +8,15 @@
         <input type="text" name="nb_players" value="<?php echo $game->fields['max_players']; ?>" />
         <label>Choix de la puissance</label>
         <select name="puissance">
-            <option></option>
+		<?
+		foreach(diplo_puissance::getAll() as $puissance){
+		    ?>
+		    <option value="<? echo $puissance->fields['id']; ?>">
+			<? echo $puissance->fields['name']; ?>
+		    </option>
+		    <?
+		}
+		?>
         </select>
         <input type="submit" value="Enregistrer" />
         <input type="button" value="Annuler" onclick="javascript:document.location.href='index.php';" />

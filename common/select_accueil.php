@@ -35,13 +35,13 @@ foreach(diplo_puissance::getAll() as $puissance){
     foreach(diplo_game::getLstSigned($_SESSION['user']['id']) as $game){
         ?>
         <tr>
-            <td>
+            <td style="text-align:center;">
                 <?php echo $game->fields['name']; ?>
             </td>
             <td style="text-align:center;">
                 <?php echo "/".$game->fields['max_players']; ?>
             </td>
-            <td>
+            <td style="text-align:center;">
                 <?php
                 if($game->fields['id_user'] == $_SESSION['user']['id']){
                 ?>
