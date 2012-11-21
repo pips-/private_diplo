@@ -6,13 +6,13 @@
     <input type="text" name="nb_players" value="7" />
     <label>Choix de la puissance</label>
     <select name="puissance">
-<?
+<?php
 foreach(diplo_puissance::getAll() as $puissance){
     ?>
-    <option value="<? echo $puissance->fields['id']; ?>">
-        <? echo $puissance->fields['name']; ?>
+    <option value="<?php echo $puissance->fields['id']; ?>">
+        <?php echo $puissance->fields['name']; ?>
     </option>
-    <?
+    <?php
 }
 ?>
     </select>
@@ -31,29 +31,29 @@ foreach(diplo_puissance::getAll() as $puissance){
             Actions
         </th>
     </tr>
-    <?
+    <?php
     foreach(diplo_game::getLstSigned($_SESSION['user']['id']) as $game){
         ?>
         <tr>
             <td>
-                <? echo $game->fields['name']; ?>
+                <?php echo $game->fields['name']; ?>
             </td>
             <td style="text-align:center;">
-                <? echo "/".$game->fields['max_players']; ?>
+                <?php echo "/".$game->fields['max_players']; ?>
             </td>
             <td>
-                <?
+                <?php
                 if($game->fields['id_user'] == $_SESSION['user']['id']){
                 ?>
-                <a href="index.php?op=edit_game&id=<? echo $game->fields['id']; ?>">
+                <a href="index.php?op=edit_game&id=<?php echo $game->fields['id']; ?>">
                     &Eacute;diter
                 </a>
-                <?
+                <?php
                 }
                 ?>
             </td>
         </tr>
-        <?
+        <?php
     }
     ?>
 </table>
@@ -70,29 +70,29 @@ foreach(diplo_puissance::getAll() as $puissance){
             Actions
         </th>
     </tr>
-    <?
+    <?php
     foreach(diplo_game::getLstDipo($_SESSION['user']['id']) as $game){
         ?>
         <tr>
             <td>
-                <? echo $game->fields['name']; ?>
+                <?php echo $game->fields['name']; ?>
             </td>
             <td style="text-align:center;">
-                <? echo "/".$game->fields['max_players']; ?>
+                <?php echo "/".$game->fields['max_players']; ?>
             </td>
             <td>
-                <?
+                <?php
                 /*if($game->fields['id_user'] == $_SESSION['user']['id']){
                 ?>
-                <a href="index.php?op=edit_game&id=<? echo $game->fields['id']; ?>">
+                <a href="index.php?op=edit_game&id=<?php echo $game->fields['id']; ?>">
                     &Eacute;diter
                 </a>
-                <?
+                <?php
                 }*/
                 ?>
             </td>
         </tr>
-        <?
+        <?php
     }
     ?>
 </table>

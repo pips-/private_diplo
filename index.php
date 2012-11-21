@@ -34,6 +34,6 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"]){
         <input type="password" name="pwd" />
         <input type="submit" value="Se connecter" />
     </form>
-    <?
+    <?php
 }
 ?>
